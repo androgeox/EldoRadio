@@ -19,8 +19,11 @@ import java.io.IOException;
 public class MainActivity extends Activity implements View.OnClickListener, MediaPlayer.OnPreparedListener{
 
     ImageButton play;
+    ImageButton stop;
     MediaPlayer mPlayer;
     TextView txtView;
+    boolean bIcon = true;
+
 
     final String DATA_STREAM = "http://emgspb.hostingradio.ru/eldoradio64.mp3";
 
@@ -30,9 +33,11 @@ public class MainActivity extends Activity implements View.OnClickListener, Medi
         setContentView(R.layout.activity_main);
 
         play = (ImageButton)findViewById(R.id.playBtn);
+        stop = (ImageButton)findViewById(R.id.stopBtn);
         txtView = (TextView)findViewById(R.id.txtView);
 
         play.setOnClickListener(this);
+        stop.setOnClickListener(this);
 
 
     }
@@ -42,17 +47,31 @@ public class MainActivity extends Activity implements View.OnClickListener, Medi
         try{
             switch(v.getId()) {
                 case (R.id.playBtn):
-                    Log.d("info", "start stream");
+                    Log.d("info", "start play");
                     mPlayer = new MediaPlayer();
                     mPlayer.setDataSource(DATA_STREAM);
                     mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                     mPlayer.setOnPreparedListener(this);
                     mPlayer.prepareAsync();
                     txtView.setText("Poehali");
+                    if(bIcon){
+                        play.setImageResource(R.drawable.stop);
+
+
+                    }else
+                        play.setImageResource(R.drawable.play);
+
+                        bIcon = !bIcon;
                     break;
-            }
+
+                case R.id.stopBtn:
+                    mPlayer.prepareAsync();
+                    mPlayer.stop();
+                }
         } catch (IOException e) {
             e.printStackTrace();
+
+
         }
 
 
