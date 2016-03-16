@@ -1,6 +1,7 @@
 package geox.eldoradio;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.support.v7.app.ActionBarActivity;
@@ -16,66 +17,26 @@ import android.widget.TextView;
 import java.io.IOException;
 
 
-public class MainActivity extends Activity implements View.OnClickListener, MediaPlayer.OnPreparedListener{
+public class MainActivity extends Activity implements View.OnClickListener{
 
-    ImageButton play;
-    ImageButton stop;
-    MediaPlayer mPlayer;
-    TextView txtView;
-    boolean bIcon = true;
+    Button startRadio;
 
-
-    final String DATA_STREAM = "http://emgspb.hostingradio.ru/eldoradio64.mp3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        play = (ImageButton)findViewById(R.id.playBtn);
-        stop = (ImageButton)findViewById(R.id.stopBtn);
-        txtView = (TextView)findViewById(R.id.txtView);
-
-        play.setOnClickListener(this);
-        stop.setOnClickListener(this);
+        startRadio = (Button)findViewById(R.id.beginBtn);
 
 
-    }
+        startRadio.setOnClickListener(this);
 
-    @Override
-    public void onClick(View v){
-        try{
-            switch(v.getId()) {
-                case (R.id.playBtn):
-                    Log.d("info", "start play");
-                    mPlayer = new MediaPlayer();
-                    mPlayer.setDataSource(DATA_STREAM);
-                    mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                    mPlayer.setOnPreparedListener(this);
-                    mPlayer.prepareAsync();
-                    txtView.setText("Poehali");
-                    if(bIcon){
-                        play.setImageResource(R.drawable.stop);
-
-
-                    }else
-                        play.setImageResource(R.drawable.play);
-
-                        bIcon = !bIcon;
-                    break;
-
-                case R.id.stopBtn:
-                    mPlayer.prepareAsync();
-                    mPlayer.stop();
-                }
-        } catch (IOException e) {
-            e.printStackTrace();
-
-
-        }
 
 
     }
+
+
 
 
     @Override
@@ -101,7 +62,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Medi
     }
 
     @Override
-    public void onPrepared(MediaPlayer player) {
-        player.start();
+    public void onClick(View view) {
+        Intent intent = new Intent(MainActivity.this, StationList.class);
+        startActivity(intent);
     }
 }
