@@ -17,6 +17,8 @@ import android.widget.TextView;
 import java.io.IOException;
 
 
+
+
 public class MainActivity extends Activity implements View.OnClickListener{
 
     Button startRadio;
@@ -28,16 +30,8 @@ public class MainActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
 
         startRadio = (Button)findViewById(R.id.beginBtn);
-
-
         startRadio.setOnClickListener(this);
-
-
-
-    }
-
-
-
+   }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

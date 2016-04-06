@@ -6,7 +6,7 @@ package geox.eldoradio;
 public class Station {
     private String name;
     //private String description;
-    public static String dataStream;
+    public String dataStream;
     private int imageResourceId;
 
     public static final Station[] stations = {
@@ -15,12 +15,13 @@ public class Station {
             new Station("Europa+ SPb", "http://emgspb.hostingradio.ru/europaplusspb64.mp3", R.drawable.europa)
     };
 
-    private Station(String name, String dataStream,int imageResourceId){
+    public Station(String name, String dataStream,int imageResourceId){
         this.name = name;
-        //this.description = description;
         this.dataStream = dataStream;
         this.imageResourceId = imageResourceId;
     }
+
+
 
     public String getName() {
         return name;
