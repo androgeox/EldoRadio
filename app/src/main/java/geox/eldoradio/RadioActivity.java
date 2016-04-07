@@ -3,6 +3,7 @@ package geox.eldoradio;
 import android.app.Activity;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.MediaTimestamp;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -57,7 +58,7 @@ public class RadioActivity extends Activity implements View.OnClickListener, Med
         pause.setImageResource(R.drawable.pause60);
 
         /* Указание интенту какую запись брать из массива */
-        try{
+
             int stationNo = (Integer) getIntent().getExtras().get(EXTRA_STATIONNO);
             Station station = Station.stations[stationNo];
 
@@ -70,7 +71,7 @@ public class RadioActivity extends Activity implements View.OnClickListener, Med
         photo.setImageResource(station.getImageResourceId());
 
         mPlayer = new MediaPlayer();
-
+        try{
             mPlayer.setDataSource(station.getDataStream());
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setOnPreparedListener(this);
@@ -114,6 +115,7 @@ public class RadioActivity extends Activity implements View.OnClickListener, Med
     }
 
     private int doWork() {
+        //int delta = mPlayer.getCurrentPosition()-mProgressStatus;
         return mPlayer.getCurrentPosition();
     }
 
