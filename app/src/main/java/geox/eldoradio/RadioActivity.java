@@ -3,9 +3,7 @@ package geox.eldoradio;
 import android.app.Activity;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.MediaTimestamp;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,18 +11,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import java.io.IOException;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
-import geox.eldoradio.Station;
-
-/**
- * Created by Georgiy on 11.03.2016.
- */
 public class RadioActivity extends Activity implements View.OnClickListener, MediaPlayer.OnPreparedListener, MediaPlayer.OnBufferingUpdateListener {
-
-
+    public static final String EXTRA_STATIONNO = "stationNo";
     private ImageButton play;
     private ImageButton stop;
     private ImageButton pause;
@@ -33,8 +24,6 @@ public class RadioActivity extends Activity implements View.OnClickListener, Med
     private ProgressBar progressBar;
     private Handler h;
     private int mProgressStatus = 0;
-
-    public static final String EXTRA_STATIONNO = "stationNo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,19 +48,19 @@ public class RadioActivity extends Activity implements View.OnClickListener, Med
 
         /* Указание интенту какую запись брать из массива */
 
-            int stationNo = (Integer) getIntent().getExtras().get(EXTRA_STATIONNO);
-            Station station = Station.stations[stationNo];
+        int stationNo = (Integer) getIntent().getExtras().get(EXTRA_STATIONNO);
+        Station station = Station.stations[stationNo];
 
         /* Получение названия станции */
-        TextView  name = (TextView) findViewById(R.id.txtView);
+        TextView name = (TextView) findViewById(R.id.txtView);
         name.setText(station.getName());
 
         /* Получение лого станции */
-        ImageView photo = (ImageView)findViewById(R.id.photo);
+        ImageView photo = (ImageView) findViewById(R.id.photo);
         photo.setImageResource(station.getImageResourceId());
 
         mPlayer = new MediaPlayer();
-        try{
+        try {
             mPlayer.setDataSource(station.getDataStream());
             mPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mPlayer.setOnPreparedListener(this);
@@ -79,27 +68,26 @@ public class RadioActivity extends Activity implements View.OnClickListener, Med
             e.printStackTrace();
         }
 
-        h = new Handler() {
-            @Override
-            public void close() {
-
-            }
-
-            @Override
-            public void flush() {
-
-            }
-
-            @Override
-            public void publish(LogRecord record) {
-
-            }
-        };
+//        h = new Handler() {
+//            @Override
+//            public void close() {
+//
+//            }
+//
+//            @Override
+//            public void flush() {
+//            }
+//
+//            @Override
+//            public void publish(LogRecord record) {
+//
+//            }
+//        };
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                while(mProgressStatus<100){
+                while (mProgressStatus < 100) {
                     mProgressStatus = doWork();
 
                     //update the progressBar
@@ -130,8 +118,8 @@ public class RadioActivity extends Activity implements View.OnClickListener, Med
             case (R.id.stopBtn):
                 if (mPlayer.isPlaying()) {
 
-                        mPlayer.stop();
-                    }
+                    mPlayer.stop();
+                }
                 break;
             case (R.id.pauseBtn):
                 mPlayer.pause();

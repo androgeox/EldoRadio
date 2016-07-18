@@ -2,36 +2,24 @@ package geox.eldoradio;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
-import java.io.IOException;
+public class MainActivity extends Activity implements View.OnClickListener {
 
-
-
-
-public class MainActivity extends Activity implements View.OnClickListener{
-
-    Button startRadio;
-
+    private Button startRadio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        startRadio = (Button)findViewById(R.id.beginBtn);
+        startRadio = (Button) findViewById(R.id.beginBtn);
         startRadio.setOnClickListener(this);
-   }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -51,7 +39,6 @@ public class MainActivity extends Activity implements View.OnClickListener{
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
